@@ -157,8 +157,8 @@ disk_addr_packet:
     .byte   0x10                        # [0] size of packet 16 bytes
     .byte   0x00                        # [1] reserved always 0
     .word   0x01                        # [2] blocks to read
+    .word   0x00                        # [4] transfer buffer(16 bit offset)
     .word   0x00                        # [6] transfer buffer(16 bit segment)
-    .word   0x00                        # [6] transfer buffer(16 bit offset)
     .long   0x01                        # [8] starting LBA
     .long   0x00                        # [12]used for upper part of 48 bit LBAs
 
@@ -248,7 +248,7 @@ enable_a20:
 	jnz		enable_a20					# 忙等待
 
 	movb	$0xdf,			%al
-	outb	%al,			$0x64		# 将0xdf写入端口0x60
+	outb	%al,			$0x60		# 将0xdf写入端口0x60
 
 	movl	%cr0,			%eax		# 读取cr0寄存器
 	orl		$0x01,			%eax		# 置位最后以为即PE位
